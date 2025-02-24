@@ -1,9 +1,48 @@
+version: '3.8'
+
 services:
   frontend:
     build:
-        context: ./frontend
-        dockerfile: Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: next-front
     restart: unless-stopped
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nest-backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_HOST=database
+      - DATABASE_PORT=5432
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=admin
+      - DATABASE_NAME=voyagesdb
+
+  database:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: voyagesdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
