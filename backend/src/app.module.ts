@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseModule } from './database/database.module';
-import { UsersModule } from './users/users.module';
+import { FirebaseModule } from './firebase/firebase.module';
 import { TripsModule } from './trips/trips.module';
+import {ScheduleModule} from "@nestjs/schedule";
 
 @Module({
-  imports: [DatabaseModule, UsersModule, TripsModule],
+  imports: [TripsModule, FirebaseModule, ScheduleModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
