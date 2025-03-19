@@ -9,7 +9,8 @@ interface Step {
 interface Trip {
   id: string;
   name: string;
-  date: string;
+  startDate: string;
+  endDate: string;
   steps: Step[];
 }
 
@@ -25,28 +26,25 @@ export const useTripStore = create<TripStore>()(
   persist(
 	(set) => ({
 	  trips: [],
-	  addTrip: (trip) => set((state) => ({ trips: [...state.trips, trip] })),
+	  addTrip: (trip) =>
+		set((state) => ({ trips: [...state.trips, { ...trip, steps: [] }] })),
 	  removeTrip: (id) =>
 		set((state) => ({ trips: state.trips.filter((trip) => trip.id !== id) })),
-
 	  addStepToTrip: (tripId, step) =>
 		set((state) => ({
 		  trips: state.trips.map((trip) =>
-			trip.id === tripId
-			  ? { ...trip, steps: [...trip.steps, step] }
-			  : trip
+			trip.id === tripId ? { ...trip, steps: [...trip.steps, step] } : trip
 		  ),
 		})),
-
 	  removeStepFromTrip: (tripId, stepId) =>
 		set((state) => ({
 		  trips: state.trips.map((trip) =>
 			trip.id === tripId
-			  ? { ...trip, steps: trip.steps.filter((step) => step.id !== stepId) } // Suppression de l'étape du tableau des étapes
+			  ? { ...trip, steps: trip.steps.filter((step) => step.id !== stepId) }
 			  : trip
 		  ),
 		})),
 	}),
-	{ name: 'trip-storage' }
+	{ name: "trip-storage" }
   )
 );
