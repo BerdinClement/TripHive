@@ -15,3 +15,22 @@ TripHive is a web PWA designed to simplify travel planning and management. It of
 
 ## 🚀 Installation & Execution
 
+### Prerequisites
+- Docker & Docker Compose
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/user/TripHive.git
+cd TripHive
+```
+
+### 2️⃣ Start the project with Docker
+```bash
+docker-compose up --build
+```
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+### 3️⃣ Stop the project
+```bash
+docker-compose down
+```
