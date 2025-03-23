@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import RequestNotificationPermission from "@/lib/RequestNotificationPermission";
 
 export const metadata: Metadata = {
   title: "TripHive",
@@ -16,7 +15,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RequestNotificationPermission/>
         {children}
       </body>
     </html>

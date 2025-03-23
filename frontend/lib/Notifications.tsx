@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { onMessage } from "firebase/messaging";
-import {messaging} from "@/firebaseConfig";
+import {getMessaging, onMessage} from "firebase/messaging";
 
 const Notifications = () => {
   useEffect(() => {
+	const messaging = getMessaging();
 	onMessage(messaging, (payload) => {
 	  console.log("Message reçu en premier plan:", payload);
 	  alert(`Notification: ${payload.notification?.title}`);

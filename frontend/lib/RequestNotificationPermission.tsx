@@ -1,10 +1,11 @@
-"use client"
-import { useEffect } from "react";
-import {requestNotificationPermission} from "@/firebaseConfig";
+"use client";
 
-function RequestNotificationPermission() {
+import { useEffect } from "react";
+import {requestNotificationPermission} from "@/lib/requestPerms";
+
+export default function RequestNotificationPermission() {
   useEffect(() => {
-	if ("serviceWorker" in navigator) {
+	if (typeof window !== "undefined" && "serviceWorker" in navigator) {
 	  navigator.serviceWorker
 		.register("/firebase-messaging-sw.js")
 		.then((registration) => {
@@ -13,12 +14,10 @@ function RequestNotificationPermission() {
 		.catch((error) => {
 		  console.error("Erreur d'enregistrement du Service Worker:", error);
 		});
-	}
 
-	requestNotificationPermission();
+	  requestNotificationPermission();
+	}
   }, []);
 
-  return <> </>;
+  return null;
 }
-
-export default RequestNotificationPermission;

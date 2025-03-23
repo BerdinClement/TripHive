@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useTripStore } from "@/stores/userTripStore";
 import { useRouter } from "next/navigation";
+import RequestNotificationPermission from "@/lib/RequestNotificationPermission";
 
 export default function Dashboard() {
   const { trips, addTrip, removeTrip } = useTripStore();
@@ -33,6 +34,8 @@ export default function Dashboard() {
 	  <header className="mb-6 text-center">
 		<h1 className="text-3xl font-bold text-gray-900">Your Trips</h1>
 	  </header>
+
+	  <RequestNotificationPermission/>
 
 	  {/* Formulaire pour ajouter un voyage */}
 	  <div className="max-w-lg mx-auto mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
