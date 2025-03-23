@@ -1,31 +1,24 @@
 "use client"
 import { useEffect } from "react";
-import { getToken } from "firebase/messaging";
-import {messaging} from "@/firebaseConfig";
+import {requestNotificationPermission} from "@/firebaseConfig";
 
 function RequestNotificationPermission() {
   useEffect(() => {
-	const requestPermission = async () => {
-	  try {
-		const permission = await Notification.requestPermission();
-		if (permission === "granted") {
-		  console.log("Notification permission granted.");
-		  const token = await getToken(messaging, {
-			vapidKey: process.env.VAPID || "BEk42q4so7Q-A0ICPlUi9Ne5sG72AD5rG7-4vv9SlWI18ggRjsLfw8s4e6T0-no-tuFoCs9Mc6KCs4KQGZJzZMs",
-		  });
-		  console.log("FCM Token:", token);
-		} else {
-		  console.log("Notification permission denied.");
-		}
-	  } catch (error) {
-		console.error("Error getting notification permission", error);
-	  }
-	};
+	if ("serviceWorker" in navigator) {
+	  navigator.serviceWorker
+		.register("/firebase-messaging-sw.js")
+		.then((registration) => {
+		  console.log("Service Worker enregistré:", registration);
+		})
+		.catch((error) => {
+		  console.error("Erreur d'enregistrement du Service Worker:", error);
+		});
+	}
 
-	requestPermission();
+	requestNotificationPermission();
   }, []);
 
-  return null;
+  return <> </>;
 }
 
 export default RequestNotificationPermission;
