@@ -10,7 +10,7 @@ const Notifications = () => {
 	});
   }, []);
 
-  return <div>Notifications activées</div>;
+  return <div>Notifications</div>;
 };
 
 export default Notifications;
